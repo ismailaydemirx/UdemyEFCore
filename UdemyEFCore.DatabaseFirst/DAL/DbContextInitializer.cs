@@ -20,9 +20,9 @@ namespace UdemyEFCore.DatabaseFirst.DAL
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             Configuration = builder.Build();
-            OptionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            //OptionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            OptionsBuilder.UseSqlServer(Configuration.GetConnectionString("SqlCon"));
+            //OptionsBuilder.UseSqlServer(Configuration.GetConnectionString("SqlCon"));
         }
 
     }

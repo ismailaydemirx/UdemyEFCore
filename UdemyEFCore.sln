@@ -5,6 +5,10 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyEFCore.DatabaseFirst", "UdemyEFCore.DatabaseFirst\UdemyEFCore.DatabaseFirst.csproj", "{8650C6EF-D46F-45E3-BF51-21C856CBF369}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyEDCore.DatabaseFirstByScaffold", "UdemyEDCore.DatabaseFirstByScaffold\UdemyEDCore.DatabaseFirstByScaffold.csproj", "{619BE201-F7AC-404E-826C-6D4EE538EA38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyEFCore.CodeFirst", "UdemyEFCore.CodeFirst\UdemyEFCore.CodeFirst.csproj", "{D4F83ECB-79B1-4411-931C-2DDE24F9C770}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8650C6EF-D46F-45E3-BF51-21C856CBF369}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8650C6EF-D46F-45E3-BF51-21C856CBF369}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8650C6EF-D46F-45E3-BF51-21C856CBF369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619BE201-F7AC-404E-826C-6D4EE538EA38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619BE201-F7AC-404E-826C-6D4EE538EA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619BE201-F7AC-404E-826C-6D4EE538EA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619BE201-F7AC-404E-826C-6D4EE538EA38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4F83ECB-79B1-4411-931C-2DDE24F9C770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4F83ECB-79B1-4411-931C-2DDE24F9C770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4F83ECB-79B1-4411-931C-2DDE24F9C770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4F83ECB-79B1-4411-931C-2DDE24F9C770}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
