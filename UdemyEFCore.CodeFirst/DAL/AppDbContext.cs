@@ -19,5 +19,21 @@ namespace UdemyEFCore.CodeFirst.DAL
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
 
         }
+
+        public override int SaveChanges()
+        {
+            ChangeTracker.Entries().ToList().ForEach(e => // bu temord track edilen datalard dönmemize izin veriyor.
+            {
+                if (e.Entity is Product p)
+                {
+                    if (e.State == EntityState.Added)
+                    {
+                        p.CreatedDate = DateTime.Now;
+                    }
+                }
+            });
+
+            return base.SaveChanges();
+        }
     }
 }
