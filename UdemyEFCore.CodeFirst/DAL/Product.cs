@@ -9,19 +9,16 @@ using System.Threading.Tasks;
 
 namespace UdemyEFCore.CodeFirst.DAL
 {
-    [Table("ProductTb", Schema ="products")]
     public class Product
     {
-        //nullable açık ise nullable:false
-        [Required] 
-        public int Product_Id { get; set; }
-
-        //[StringLength(100,MinimumLength =20)]
+        public int Id { get; set; }
         public string Name { get; set; }
-
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public int Barcode { get; set; } // bunu sonradan eklediğim için bunun için bir migration yapmalıyım.
-        public DateTime? CreatedDate { get; set; }
+        public int Barcode { get; set; }
+        public int Category_Id { get; set; } // Category şu anda parent olarak farzediyoruz EF Core burada belirttiğimiz CategoryId 'yi foreign key olarak algılıyor. Id yazısının önündeki ek olan Category ekinden bu durumu anlıyor.
+        // Navigation Property
+        
+        public Category Category { get; set; } // Burada Category veritabanında oluşmayacak, bunlar EF Core'da Product'dan Category'e, Category'den Product'a geçmek için kullandığımız navigation property'lerdir.
     }
 }
