@@ -12,8 +12,8 @@ using UdemyEFCore.CodeFirst.DAL;
 namespace UdemyEFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230711123055_AddCreatedDate_ForProduct")]
-    partial class AddCreatedDate_ForProduct
+    [Migration("20230712110052_UpdateProduct")]
+    partial class UpdateProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Product_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Product_Id"));
 
                     b.Property<int>("Barcode")
                         .HasColumnType("int");
@@ -40,18 +40,17 @@ namespace UdemyEFCore.CodeFirst.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Stock")
+                    b.Property<int?>("Stock")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Product_Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("ProductTb", "products");
                 });
 #pragma warning restore 612, 618
         }

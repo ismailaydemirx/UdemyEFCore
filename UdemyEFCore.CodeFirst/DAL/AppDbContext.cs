@@ -20,20 +20,28 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         }
 
-        public override int SaveChanges()
+        protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            ChangeTracker.Entries().ToList().ForEach(e => // bu temord track edilen datalard dönmemize izin veriyor.
-            {
-                if (e.Entity is Product p)
-                {
-                    if (e.State == EntityState.Added)
-                    {
-                        p.CreatedDate = DateTime.Now;
-                    }
-                }
-            });
-
-            return base.SaveChanges();
+            modelBuilder.Entity<Product>().HasKey(x=> x.Product_Id);
+            modelBuilder.Entity<Product>().Property(x => x.Name).IsRequired().HasMaxLength(100).IsFixedLength();
+            base.OnModelCreating(modelBuilder);
         }
+
+
+        //public override int SaveChanges()
+        //{
+        //    ChangeTracker.Entries().ToList().ForEach(e => // bu temord track edilen datalard dönmemize izin veriyor.
+        //    {
+        //        if (e.Entity is Product p)
+        //        {
+        //            if (e.State == EntityState.Added)
+        //            {
+        //                p.CreatedDate = DateTime.Now;
+        //            }
+        //        }
+        //    });
+
+        //    return base.SaveChanges();
+        //}
     }
 }
