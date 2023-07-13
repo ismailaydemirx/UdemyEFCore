@@ -8,12 +8,12 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    Category category = _context.Categories.Where(x=>x.Id==1).FirstOrDefault();
-    var cat = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0);
-    var cat2 = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0).ToList();
-    var product = new Product() { Name = "Kalem", Price = 100, Stock = 120, CategoryId = 10 };
-    category.Products.Add(product);
-    var a = new Product();
+    //Category category = _context.Categories.Where(x=>x.Id==1).FirstOrDefault();
+    //var cat = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0);
+    //var cat2 = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0).ToList();
+    //var product = new Product() { Name = "Kalem", Price = 100, Stock = 120, CategoryId = 10 };
+    //category.Products.Add(product);
+    //var a = new Product();
     _context.SaveChanges();
 
 }

@@ -10,6 +10,7 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
@@ -25,6 +26,7 @@ namespace UdemyEFCore.CodeFirst.DAL
         {
             // her zaman has ile başlanır.
             // modelBuilder.Entity<Category>().HasMany(x=>x.Products).WithOne(x=>x.Category).HasForeignKey(x=>x.Category_Id);
+            modelBuilder.Entity<Product>().HasOne(x => x.ProductFeature).WithOne(x => x.Product).HasForeignKey<ProductFeature>(x => x.ProductRefId);
             base.OnModelCreating(modelBuilder);
         }
     }
