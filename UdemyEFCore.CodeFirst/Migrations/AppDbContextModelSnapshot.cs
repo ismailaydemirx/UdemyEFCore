@@ -21,22 +21,22 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("StudentTeacherManyToMany", b =>
                 {
-                    b.Property<int>("StudentsId")
+                    b.Property<int>("Student_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeachersId")
+                    b.Property<int>("Teacher_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentsId", "TeachersId");
+                    b.HasKey("Student_Id", "Teacher_Id");
 
-                    b.HasIndex("TeachersId");
+                    b.HasIndex("Teacher_Id");
 
-                    b.ToTable("StudentTeacher");
+                    b.ToTable("StudentTeacherManyToMany");
                 });
 
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Student", b =>
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Students", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,19 +73,21 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.ToTable("Teacher");
                 });
 
-            modelBuilder.Entity("StudentTeacher", b =>
+            modelBuilder.Entity("StudentTeacherManyToMany", b =>
                 {
-                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Student", null)
+                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Students", null)
                         .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("Student_Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__StudentId");
 
                     b.HasOne("UdemyEFCore.CodeFirst.DAL.Teacher", null)
                         .WithMany()
-                        .HasForeignKey("TeachersId")
+                        .HasForeignKey("Teacher_Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK__TeacherId");
                 });
 #pragma warning restore 612, 618
         }
