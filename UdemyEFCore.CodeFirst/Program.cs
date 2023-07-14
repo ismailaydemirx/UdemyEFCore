@@ -15,17 +15,15 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
     //_context.Add(student);
 
 
-    var teacher = new Teacher()
-    {
-        Name = "Hasan Öğretmen",
-        Students = new List<Students>()
-        {
-            new Students(){Name="Hasan1",Age=21 },
-            new Students(){Name="Hasan2",Age=22 },
-        }
-    };
+    var teacher = _context.Teachers.First(x => x.Name == "Hasan Öğretmen"); // buradaki memory track edildiği için alt kısımda tekrardan _context.Add(teacher) veya update dememize gerek yok. _context.SaveChanges(); dediğimizde track edildiği için kendisi güncelliyor.
 
-    _context.Add(teacher);
+    teacher.Students.AddRange(
+        new List<Students> {
+            new() { Name = "Mehmet", Age = 19 },
+            new() { Name = "Nihat", Age = 20 }
+        }
+        );
+
     _context.SaveChanges();
     Console.WriteLine("Saved!");
 }
