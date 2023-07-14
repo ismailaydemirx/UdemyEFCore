@@ -8,14 +8,19 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    //Category category = _context.Categories.Where(x=>x.Id==1).FirstOrDefault();
-    //var cat = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0);
-    //var cat2 = _context.Categories.Include(x=>x.Products).Where(x=>x.Id!=0).ToList();
-    //var product = new Product() { Name = "Kalem", Price = 100, Stock = 120, CategoryId = 10 };
-    //category.Products.Add(product);
-    //var a = new Product();
-    _context.SaveChanges();
+    // Product => Parent
+    // ProductFeature => Child
 
+    var category = _context.Categories.First(x => x.Name == "Silgiler");
+
+    var product = new Product { Name = "Silgi10", Price = 200, Stock = 200, Barcode = 123, Category = category, };
+
+
+    ProductFeature productFeature = new ProductFeature() { Color = "Blue", Width = 200, Height = 100, Product = product };
+
+    _context.ProductFeature.Add(productFeature);
+    _context.SaveChanges();
+    Console.WriteLine("Saved!");
 }
 
 void CRUDSettings()

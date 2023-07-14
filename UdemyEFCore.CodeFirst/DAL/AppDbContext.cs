@@ -10,9 +10,9 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-
-        public DbSet<Students> Students { get; set; }
-        public DbSet<Teacher> Teacher{ get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductFeature> ProductFeature { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,22 +24,8 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            // her zaman has ile başlanır.
+            // her zaman has ile başlanır
 
-            // One-to-Many
-            // modelBuilder.Entity<Category>().HasMany(x=>x.Products).WithOne(x=>x.Category).HasForeignKey(x=>x.Category_Id);
-
-            // One-to-One
-            //modelBuilder.Entity<Product>().HasOne(x => x.ProductFeature).WithOne(x => x.Product).HasForeignKey<ProductFeature>(x => x.Id);
-
-            modelBuilder.Entity<Students>()
-                .HasMany(x => x.Teachers)
-                .WithMany(x => x.Students)
-                .UsingEntity<Dictionary<string, object>>(
-                "StudentTeacherManyToMany",
-                x => x.HasOne<Teacher>().WithMany().HasForeignKey("Teacher_Id").HasConstraintName("FK__TeacherId"),
-                x=>x.HasOne<Students>().WithMany().HasForeignKey("Student_Id").HasConstraintName("FK__StudentId")
-                );
 
 
             base.OnModelCreating(modelBuilder);
