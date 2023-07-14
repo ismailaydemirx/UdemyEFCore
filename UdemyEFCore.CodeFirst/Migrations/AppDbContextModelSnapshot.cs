@@ -21,7 +21,42 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Category", b =>
+            modelBuilder.Entity("StudentTeacher", b =>
+                {
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeachersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentsId", "TeachersId");
+
+                    b.HasIndex("TeachersId");
+
+                    b.ToTable("StudentTeacher");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,71 +70,21 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Teacher");
                 });
 
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
+            modelBuilder.Entity("StudentTeacher", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Barcode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Height")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Width")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductFeature");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
-                {
-                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Product", "Product")
-                        .WithOne("ProductFeature")
-                        .HasForeignKey("UdemyEFCore.CodeFirst.DAL.ProductFeature", "Id")
+                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
-                {
-                    b.Navigation("ProductFeature")
+                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Teacher", null)
+                        .WithMany()
+                        .HasForeignKey("TeachersId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
