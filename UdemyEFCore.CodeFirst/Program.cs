@@ -8,17 +8,11 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    // Product => Parent
-    // ProductFeature => Child
+    var student = new Students() { Name = "ismail", Age = 23 };
+    student.Teachers.Add(new() { Name = "Ahmet Öğretmen" });
+    student.Teachers.Add(new() { Name = "Mehmet Öğretmen" });
 
-    var category = _context.Categories.First(x => x.Name == "Silgiler");
-
-    var product = new Product { Name = "Silgi10", Price = 200, Stock = 200, Barcode = 123, Category = category, };
-
-
-    ProductFeature productFeature = new ProductFeature() { Color = "Blue", Width = 200, Height = 100, Product = product };
-
-    _context.ProductFeature.Add(productFeature);
+    _context.Add(student);
     _context.SaveChanges();
     Console.WriteLine("Saved!");
 }

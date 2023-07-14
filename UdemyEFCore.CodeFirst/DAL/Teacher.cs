@@ -10,6 +10,6 @@ namespace UdemyEFCore.CodeFirst.DAL
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Students> Students { get; set; }
+        public List<Students> Students { get; set; } = new();
     }
 }
