@@ -9,6 +9,10 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
     var category = _context.Categories.First();
+
+    var products = _context.Products.Where(x=>x.CategoryId == category.Id).ToList();
+    _context.RemoveRange(products);
+
     _context.Categories.Remove(category);
     //var category = new Category()
     //{
@@ -21,7 +25,7 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
     //    }
     //};
 
-   // _context.Add(category);
+    //_context.Add(category);
     _context.SaveChanges();
     
     Console.WriteLine("Done!");

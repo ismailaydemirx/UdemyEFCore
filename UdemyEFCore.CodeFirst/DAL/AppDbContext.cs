@@ -31,7 +31,7 @@ namespace UdemyEFCore.CodeFirst.DAL
                 .HasMany(x => x.Products)
                 .WithOne(x => x.Category)
                 .HasForeignKey(x => x.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             base.OnModelCreating(modelBuilder);
