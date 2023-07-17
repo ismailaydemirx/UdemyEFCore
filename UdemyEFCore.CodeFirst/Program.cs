@@ -8,49 +8,21 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    //var student = new Students() { Name = "ismail", Age = 23 };
-    //student.Teachers.Add(new() { Name = "Ahmet Öğretmen" });
-    //student.Teachers.Add(new() { Name = "Mehmet Öğretmen" });
-
-    //_context.Add(student);
-
-
-    var teacher = _context.Teachers.First(x => x.Name == "Hasan Öğretmen"); // buradaki memory track edildiği için alt kısımda tekrardan _context.Add(teacher) veya update dememize gerek yok. _context.SaveChanges(); dediğimizde track edildiği için kendisi güncelliyor.
-
-    teacher.Students.AddRange(
-        new List<Students> {
-            new() { Name = "Mehmet", Age = 19 },
-            new() { Name = "Nihat", Age = 20 }
-        }
-        );
-
-    _context.SaveChanges();
-    Console.WriteLine("Saved!");
-}
-
-void CRUDSettings()
-{
-    //product.ForEach(p =>
+    var category = _context.Categories.First();
+    _context.Categories.Remove(category);
+    //var category = new Category()
     //{
+    //    Name = "Kalemler",
+    //    Products = new List<Product>()
+    //    {
+    //        new() {Name="Kalem1",Price=100,Stock=200,Barcode=123,},
+    //        new() {Name="Kalem2",Price=100,Stock=200,Barcode=123,},
+    //        new() {Name="Kalem3",Price=100,Stock=200,Barcode=123,}
+    //    }
+    //};
 
-    //    var state = _context.Entry(p).State;
-    //    Console.WriteLine($"{p.Id} : {p.Name} - {p.Price} - {p.Stock} state: {state}");
-    //});
-
-
-    //Console.WriteLine($"Context Id? {_context.ContextId}");
-
-    //_context.SaveChanges();
-    //_context.Update(new Product() { Id = 5, Name = "Defter", Price = 150, Stock = 100, Barcode = 425 });
-    //_context.Entry(product).State = EntityState.Deleted; üstteki ile aynı.
-
-    //await _context.SaveChangesAsync();
-    //Console.WriteLine("save change state: " + _context.Entry(product).State);
-
-    //_context.Entry(product).State = EntityState.Added;
-
-    //await _context.AddAsync(newProduct);
-
-
-    //var products = await _context.Products.AsNoTracking().ToListAsync();//git veritabanıyla haberleş demek - ToListAsync asenkron olduğundan başına 'await' keyword'ü ekledik.
+   // _context.Add(category);
+    _context.SaveChanges();
+    
+    Console.WriteLine("Done!");
 }

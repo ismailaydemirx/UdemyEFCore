@@ -18,7 +18,6 @@ namespace UdemyEFCore.CodeFirst.DAL
         public int Barcode { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; } = new Category(); // null exception almamak için buraya initialize komutunu ( new List<Product>(); ) ekledik.
-
-        public ProductFeature ProductFeature { get; set; }
+        //public ProductFeature ProductFeature { get; set; }
     }
 }

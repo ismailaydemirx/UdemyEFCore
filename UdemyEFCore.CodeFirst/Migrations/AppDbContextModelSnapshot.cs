@@ -170,8 +170,8 @@ namespace UdemyEFCore.CodeFirst.Migrations
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
                 {
                     b.HasOne("UdemyEFCore.CodeFirst.DAL.Product", "Product")
-                        .WithOne("ProductFeature")
-                        .HasForeignKey("UdemyEFCore.CodeFirst.DAL.ProductFeature", "Id")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -181,12 +181,6 @@ namespace UdemyEFCore.CodeFirst.Migrations
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
-                {
-                    b.Navigation("ProductFeature")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
