@@ -10,11 +10,11 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductFeature> ProductFeature { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Students> Students { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        //public DbSet<ProductFeature> ProductFeature { get; set; }
+        //public DbSet<Teacher> Teachers { get; set; }
+        //public DbSet<Students> Students { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,12 +27,8 @@ namespace UdemyEFCore.CodeFirst.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
             // her zaman has ile başlanır
-            modelBuilder.Entity<Category>()
-                .HasMany(x => x.Products)
-                .WithOne(x => x.Category)
-                .HasForeignKey(x => x.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
 
             base.OnModelCreating(modelBuilder);
         }
