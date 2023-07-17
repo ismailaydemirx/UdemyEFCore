@@ -28,7 +28,9 @@ namespace UdemyEFCore.CodeFirst.DAL
         {
             // her zaman has ile başlanır
 
-            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAdd();// Identity
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAddOrUpdate();// Computed
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedNever();// No
 
             base.OnModelCreating(modelBuilder);
         }
