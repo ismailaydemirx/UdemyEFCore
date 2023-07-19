@@ -11,8 +11,8 @@ namespace UdemyEFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<ProductFeature> ProductFeature { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductFeature> ProductFeature { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
         //public DbSet<Students> Students { get; set; }
 
@@ -27,10 +27,6 @@ namespace UdemyEFCore.CodeFirst.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
             // her zaman has ile başlanır
-
-            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAdd();// Identity
-            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedOnAddOrUpdate();// Computed
-            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).ValueGeneratedNever();// No
 
             base.OnModelCreating(modelBuilder);
         }
