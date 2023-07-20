@@ -18,9 +18,16 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            // Log türleri 6 tane
+            // Trace
+            // Debug
+            // Information
+            // Warning
+            // Error
+            // Critical
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
-            optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            optionsBuilder.LogTo(Console.WriteLine,Microsoft.Extensions.Logging.LogLevel.Information).UseLazyLoadingProxies().UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+
 
         }
 
