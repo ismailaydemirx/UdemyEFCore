@@ -8,6 +8,31 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
+
+    var product = _context.Products.First();
+    //
+    //
+    //
+    if (true)
+    {
+        _context.Entry(product).Reference(x => x.ProductFeature).Load(); // kategoriyi çekerken collection kullandık ancak product çekerken reference kullandık.
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //var category = new Category()
     //{
     //    Name = "Kalemler",
@@ -35,18 +60,16 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
 
     // Kategoriyi çekerken aynı anda kategoriye bağlı product'ları almak için bu kodu kullanıyoruz.
     // Birden fazla theninclude kullanılabilir.
-    var categoryWithProducts = _context.Categories
-        .Include(x => x.Products)
-        .ThenInclude(x => x.ProductFeature)
-        .ToList().First();
+    //var categoryWithProducts = _context.Categories
+    //    .Include(x => x.Products)
+    //    .ThenInclude(x => x.ProductFeature)
+    //    .ToList().First();
 
 
-    categoryWithProducts.Products.ForEach(product =>
-    {
-        Console.WriteLine($"{categoryWithProducts.Name} {product.Name} {product.ProductFeature.Color}");
-    });
-
-    var productFeature = _context.ProductFeature.Include(x=>x.Product).ThenInclude(x=>x.Category).First();
+    //categoryWithProducts.Products.ForEach(product =>
+    //{
+    //    Console.WriteLine($"{categoryWithProducts.Name} {product.Name} {product.ProductFeature.Color}");
+    //});
 
 
     Console.WriteLine("Done!");
