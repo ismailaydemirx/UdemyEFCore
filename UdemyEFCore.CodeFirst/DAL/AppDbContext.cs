@@ -10,13 +10,11 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        //Person sınıfımız owned type olduğu için onu tanımlamadık.
-        public DbSet<Manager> Managers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<ProductFeature> ProductFeature { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<ProductFull> ProductFulls { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductFeature> ProductFeature { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
         //public DbSet<Students> Students { get; set; }
 
@@ -28,18 +26,7 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            modelBuilder.Entity<Manager>().OwnsOne(x => x.Person, p =>
-            {
-                p.Property(x => x.FirstName).HasColumnName("FirstName");
-                p.Property(x => x.LastName).HasColumnName("LastName");
-                p.Property(x => x.Age).HasColumnName("Age");
-            }); // entity ile owned type arasındaki ilişkiler 1-1 bir ilişkidir.
-            modelBuilder.Entity<Employee>().OwnsOne(x => x.Person, p =>
-            {
-                p.Property(x => x.FirstName).HasColumnName("FirstName");
-                p.Property(x => x.LastName).HasColumnName("LastName");
-                p.Property(x => x.Age).HasColumnName("Age");
-            }); // entity ile owned type arasındaki ilişkiler 1-1 bir ilişkidir.
+            //modelBuilder.Entity<ProductFull>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
     }
