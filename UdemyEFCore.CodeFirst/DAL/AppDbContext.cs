@@ -10,9 +10,7 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        //Şimdi BasePerson class'ımızı DbSet olarak ekliyoruz ve bu durumda, bir tablo oluşacak ve ona bağlı olan hiyerarşilerin datalarını tutacak.
-        public DbSet<BasePerson> Persons { get; set; }
-        // BasePerson sınıfımızı DBSet olarak eklemedik, sadece onu inherit alan classları DBSet olarak ekledik.
+        //Person sınıfımız owned type olduğu için onu tanımlamadık.
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
@@ -24,23 +22,24 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Log türleri 6 tane
-            // Trace
-            // Debug
-            // Information
-            // Warning
-            // Error
-            // Critical
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
-
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            // her zaman has ile başlanır
-
+            modelBuilder.Entity<Manager>().OwnsOne(x => x.Person, p =>
+            {
+                p.Property(x => x.FirstName).HasColumnName("FirstName");
+                p.Property(x => x.LastName).HasColumnName("LastName");
+                p.Property(x => x.Age).HasColumnName("Age");
+            }); // entity ile owned type arasındaki ilişkiler 1-1 bir ilişkidir.
+            modelBuilder.Entity<Employee>().OwnsOne(x => x.Person, p =>
+            {
+                p.Property(x => x.FirstName).HasColumnName("FirstName");
+                p.Property(x => x.LastName).HasColumnName("LastName");
+                p.Property(x => x.Age).HasColumnName("Age");
+            }); // entity ile owned type arasındaki ilişkiler 1-1 bir ilişkidir.
             base.OnModelCreating(modelBuilder);
         }
     }

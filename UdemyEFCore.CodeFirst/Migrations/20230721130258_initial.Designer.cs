@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdemyEFCore.CodeFirst.DAL;
 
@@ -10,9 +11,11 @@ using UdemyEFCore.CodeFirst.DAL;
 namespace UdemyEFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230721130258_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,18 +65,15 @@ namespace UdemyEFCore.CodeFirst.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<int>("Age")
-                                .HasColumnType("int")
-                                .HasColumnName("Age");
+                                .HasColumnType("int");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("FirstName");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("LastName");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("EmployeeId");
 
@@ -95,18 +95,15 @@ namespace UdemyEFCore.CodeFirst.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<int>("Age")
-                                .HasColumnType("int")
-                                .HasColumnName("Age");
+                                .HasColumnType("int");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("FirstName");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("LastName");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("ManagerId");
 
