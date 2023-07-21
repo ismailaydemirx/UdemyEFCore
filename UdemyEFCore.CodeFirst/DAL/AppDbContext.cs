@@ -10,9 +10,15 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductFeature> ProductFeature { get; set; }
+        //Şimdi BasePerson class'ımızı DbSet olarak ekliyoruz ve bu durumda, bir tablo oluşacak ve ona bağlı olan hiyerarşilerin datalarını tutacak.
+        public DbSet<BasePerson> Persons { get; set; }
+        // BasePerson sınıfımızı DBSet olarak eklemedik, sadece onu inherit alan classları DBSet olarak ekledik.
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        //public DbSet<ProductFeature> ProductFeature { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
         //public DbSet<Students> Students { get; set; }
 
@@ -26,7 +32,7 @@ namespace UdemyEFCore.CodeFirst.DAL
             // Error
             // Critical
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
-            optionsBuilder.LogTo(Console.WriteLine,Microsoft.Extensions.Logging.LogLevel.Information).UseLazyLoadingProxies().UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
 
 
         }

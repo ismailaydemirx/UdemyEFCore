@@ -8,16 +8,30 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
+    var managers = _context.Managers.ToList();
+    var employees = _context.Employees.ToList();
 
-    var category = await _context.Categories.FirstAsync();
-    Console.WriteLine("Category çekildi");
-    var products = category.Products;
+    var persons = _context.Persons.ToList();
 
-    // (N+1) PROBLEM
-    foreach (var item in products) // foreach metodunda lazy loading kullandığımız bir navigation property'e erişirsek her döngü başladığında veritabanına sorgu gönderiyor bu da performansı düşürüyor. O yüzden lazy loading kullandığımızda dikkatli olmamız lazım.
+    persons.ForEach(person =>
     {
-        var productFeature = item.ProductFeature;
-    }
+        switch (person)
+        {
+            case Manager managers:
+                Console.WriteLine($"manager entity : {managers.Grade}");
+                break;
 
+
+            case Employee employees:
+                Console.WriteLine($"employee entity: {employees.Salary}");
+                break;
+
+            default: break;
+        }
+    });
+    //_context.Persons.Add(new Manager() { FirstName = "ismail", LastName = "Aydemir", Age = 23, Grade = 1 });
+    //_context.Persons.Add(new Employee() { FirstName = "ersin", LastName = "Aydemir", Age = 23, Salary=1000 });
+
+    _context.SaveChanges();
     Console.WriteLine("Done!");
 }
