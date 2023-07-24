@@ -11,9 +11,9 @@ namespace UdemyEFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Person> Persons { get; set; }
-        public DbSet<ProductFull> ProductFulls { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        //public DbSet<ProductFull> ProductFulls { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
         //public DbSet<Students> Students { get; set; }
@@ -26,7 +26,14 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            //modelBuilder.Entity<ProductFull>().HasNoKey();
+            // Fluent API tarafında NotMapped kullanmak için "Ignore" methodunu kullanabiliriz.
+            modelBuilder.Entity<Product>().Ignore(x => x.Barcode);
+
+            // Fluent API tarafında [Unicode(false)] kullanmak için "Property(x => x.Name).IsUnicode(false)" methodunu kullanabiliriz.
+            modelBuilder.Entity<Product>().Property(x => x.Name).IsUnicode(false).HasMaxLength(500); // Nvarchar değil varchar olarak saklıyoruz.
+
+            modelBuilder.Entity<Product>().Property(x => x.Url).HasColumnType("varchar(500)").HasColumnName("ProductUrl"); // Column tipini burada belirleyebiliyoruz.
+
             base.OnModelCreating(modelBuilder);
         }
     }

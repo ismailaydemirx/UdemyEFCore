@@ -35,7 +35,7 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Person", b =>
@@ -59,15 +59,13 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Barcode")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(9, 2)
@@ -76,11 +74,16 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("ProductUrl");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
@@ -101,33 +104,6 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductFeature");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFull", b =>
-                {
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToTable("ProductFulls");
                 });
 
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
