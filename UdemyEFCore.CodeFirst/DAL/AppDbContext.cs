@@ -10,11 +10,9 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Person> Persons { get; set; }
-        //public DbSet<ProductFull> ProductFulls { get; set; }
-        //public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
         //public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductFeature> ProductFeature { get; set; }
+        //public DbSet<ProductFeature> ProductFeature { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
         //public DbSet<Students> Students { get; set; }
 
@@ -26,13 +24,12 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            // Fluent API tarafında NotMapped kullanmak için "Ignore" methodunu kullanabiliriz.
-            modelBuilder.Entity<Product>().Ignore(x => x.Barcode);
+            //modelBuilder.Entity<Product>().HasIndex(x => x.Name);
 
-            // Fluent API tarafında [Unicode(false)] kullanmak için "Property(x => x.Name).IsUnicode(false)" methodunu kullanabiliriz.
-            modelBuilder.Entity<Product>().Property(x => x.Name).IsUnicode(false).HasMaxLength(500); // Nvarchar değil varchar olarak saklıyoruz.
-
-            modelBuilder.Entity<Product>().Property(x => x.Url).HasColumnType("varchar(500)").HasColumnName("ProductUrl"); // Column tipini burada belirleyebiliyoruz.
+            //_context.Products.Where(x => x.Name == "kalem").Select(x => new { name = x.Name, Price = x.Price, Stock = x.Stock, Barcode = x.Barcode });
+            modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock,x.Barcode });
+            
+            //modelBuilder.Entity<Product>().HasIndex(x => new { x.Name, x.Url });
 
             base.OnModelCreating(modelBuilder);
         }

@@ -10,22 +10,20 @@ using System.Threading.Tasks;
 
 namespace UdemyEFCore.CodeFirst.DAL
 {
+    [Index(nameof(Name),nameof(Url))]
+    [Index(nameof(Url))]
+    [Index(nameof(Name))] // aşağıda tanımladığımız Name property'ine göre index oluşturuyoruz.
     public class Product
     {
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)] // bu ifadeyi eklersek aşağıdaki Id primary key olur ancak birer birer artma özelliği kaybolur.
-        public int Id { get; set; }
 
-        //[Column(TypeName ="nvarchar200")] // column da isim belirtebiliyoruz ek olarak tip de belirtebiliyoruz.
+        public int Id { get; set; }
         public string Url { get; set; }
-        //[Unicode(false)] // unicode'u iptal ettik artık varchar olarak gelecek.
         public string Name { get; set; }
         [Precision(9, 2)] // aşağıdaki Price da toplamda 18 karakter tutacağım virgülden sonra 2 karakter olabilir örnek: 1234567891111111.11
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        //[NotMapped]
+
         public int Barcode { get; set; }
-        public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }// şu an yaptığımız Set Null örneğinde Category Id'i nullable olacağı için Category'in de nullable olabilmesi adına "?" koyduk. ? koymamızın sebebi .NET 'de nullable özelliğinin Enable olmasından kaynaklı eğer "Disable" olsaydı Category'e "?" eklemeyecektik.
-        public virtual ProductFeature ProductFeature { get; set; }
+
     }
 }

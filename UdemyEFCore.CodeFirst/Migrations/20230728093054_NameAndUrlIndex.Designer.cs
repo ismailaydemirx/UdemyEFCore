@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UdemyEFCore.CodeFirst.DAL;
 
@@ -10,9 +11,11 @@ using UdemyEFCore.CodeFirst.DAL;
 namespace UdemyEFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230728093054_NameAndUrlIndex")]
+    partial class NameAndUrlIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +53,6 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
-
-                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("Name"), new[] { "Price", "Stock", "Barcode" });
 
                     b.HasIndex("Url");
 
