@@ -27,9 +27,11 @@ namespace UdemyEFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().HasIndex(x => x.Name);
 
             //_context.Products.Where(x => x.Name == "kalem").Select(x => new { name = x.Name, Price = x.Price, Stock = x.Stock, Barcode = x.Barcode });
-            modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock,x.Barcode });
-            
+            modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock, x.Barcode });
+
             //modelBuilder.Entity<Product>().HasIndex(x => new { x.Name, x.Url });
+
+            modelBuilder.Entity<Product>().HasCheckConstraint("PriceDiscountCheck", "[Price]>[DiscountPrice]");
 
             base.OnModelCreating(modelBuilder);
         }
