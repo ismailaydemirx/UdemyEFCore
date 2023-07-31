@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using System.Linq;
 using UdemyEFCore.CodeFirst;
 using UdemyEFCore.CodeFirst.DAL;
@@ -10,33 +11,39 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    // RIGHT JOIN -- Right join'i left join kullanarak gerçekleştiriyoruz. Tabloların yerini değiştirince aynı şeye denk geliyor.
-    var rightJoinResult = await (from pf in _context.ProductFeature
-                                 join p in _context.Products on pf.Id equals p.Id into plist
-                                 from p in plist.DefaultIfEmpty()
-                                 select new
-                                 {
-                                     ProductName = p.Name,
-                                     ProductPrice = (decimal?)p.Price,
-                                     ProductColor = pf.Color,
-                                     ProductWidth = pf.Width,
-                                 }).ToListAsync();
+    // Full outer join için önce left
+    var left = await (from p in _context.Products
+                              join pf in _context.ProductFeature on p.Id equals pf.Id into pfList
+                              from pf in pfList.DefaultIfEmpty()select new
+                              {
+                                  Id = p.Id,
+                                  Name = p.Name,
+                                  Color = pf.Color,
+                                  Width = (int?)pf.Width,
+                              }).ToListAsync();
 
+    //  sonra right join yapabiliriz.
+    var right = await (from pf in _context.ProductFeature
+                                     join p in _context.Products on pf.Id equals p.Id into pList
+                                     from p in pList.DefaultIfEmpty()
+                                     select new
+                                     {
+                                         Id = p.Id,
+                                         Name = p.Name,
+                                         Color = pf.Color,
+                                         Width = (int?)pf.Width,
+                                     }).ToListAsync();
 
+    var FullOuterJoin = left.Union(right); // Union metodu sayesinde 2 listeyi birleştirebiliyoruz.
+
+    FullOuterJoin.ToList().ForEach(x=>
+    {
+        Console.WriteLine(x.Name);
+    });
 
     Console.WriteLine("");
 
-
-    // LEFT JOIN 
-    var leftJoinResult = await (from p in _context.Products
-                                join pf in _context.ProductFeature on p.Id equals pf.Id into pflist
-                                from pf in pflist.DefaultIfEmpty()
-                                select new
-                                {
-                                    ProductName = p.Name,
-                                    ProductColor = pf.Color,
-                                    ProductWidth = (int?)pf.Width == null ? 5 : pf.Width,
-                                }).ToListAsync();
+   
 
     //var category = new Category() { Name = "Kalemler" };
     //category.Products.Add(new() { Name = "kalem 1", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
