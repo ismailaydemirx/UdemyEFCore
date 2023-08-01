@@ -11,9 +11,8 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    var products = _context.ProductEssential.Where(x=>x.Price>100).ToList();
-
-
+    var products = _context.ProductFull.Where(x => x.Width > 100).ToList();
+    
     Console.WriteLine("");
 
 
