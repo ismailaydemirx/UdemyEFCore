@@ -11,21 +11,10 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    var id = 5;
-    decimal price = 100;
+    // custom sql
+    var products = await _context.ProductEssential.FromSqlRaw("SELECT Name,Price FROM Products").ToListAsync();
 
-    // raw sql
-    var products = await _context.Products.FromSqlRaw("SELECT * FROM Products").ToListAsync();
-
-    // parametre
-    var product = await _context.Products.FromSqlRaw("SELECT * FROM Products where id={0}",id).FirstAsync();
-
-    // parametre
-    var product2 = await _context.Products.FromSqlRaw("SELECT * FROM Products where price>{0}",price).ToListAsync();
-
-
-    // başka yol ($) işareti koyduk sql sorgusunun başına bu sayede {} arasında değişkeni direkt belirtebiliyoruz.
-    var products3 = await _context.Products.FromSqlInterpolated($"SELECT * FROM Products where price>{price}").ToListAsync();
+    var productsWithFeature = await _context.ProductWithFeature.FromSqlRaw("select p.Id,p.Name,p.Price,pf.Color,pf.Height from Products p inner join ProductFeature pf on p.Id=pf.Id").ToListAsync();
 
     Console.WriteLine("");
 
