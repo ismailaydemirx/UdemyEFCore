@@ -15,8 +15,8 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
-        public DbSet<ProductEssnetial> ProductEssential { get; set; }
-        public DbSet<ProductWithFeature> ProductWithFeature { get; set; }
+
+        public DbSet<ProductEssential> ProductEssential { get; set; }
 
         //public DbSet<Person> People { get; set; }
         //public DbSet<Teacher> Teachers { get; set; }
@@ -30,11 +30,8 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            modelBuilder.Entity<ProductEssnetial>().Ignore(x=>x.Price); // 
-            //Custom Sorgularda Her Zaman HasNoKey() metodunu kullanın.
-            modelBuilder.Entity<ProductEssnetial>().HasNoKey();
 
-            modelBuilder.Entity<ProductWithFeature>().HasNoKey();
+            modelBuilder.Entity<ProductEssential>().HasNoKey().ToSqlQuery("SELECT Name, Price FROM Products");
 
             base.OnModelCreating(modelBuilder);
         }

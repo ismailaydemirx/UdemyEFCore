@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UdemyEFCore.CodeFirst.DAL.Models
 {
-    public class ProductEssnetial
+    public class ProductEssential
     {
         public string Name { get; set; }
         

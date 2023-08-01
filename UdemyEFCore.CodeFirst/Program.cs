@@ -11,14 +11,15 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    // custom sql
-    var products = await _context.ProductEssential.FromSqlRaw("SELECT Name,Price FROM Products").ToListAsync();
+    var products = _context.ProductEssential.Where(x=>x.Price>100).ToList();
 
-    var productsWithFeature = await _context.ProductWithFeature.FromSqlRaw("select p.Id,p.Name,p.Price,pf.Color,pf.Height from Products p inner join ProductFeature pf on p.Id=pf.Id").ToListAsync();
 
     Console.WriteLine("");
 
-   
+
+
+
+
 
     //var category = new Category() { Name = "Kalemler" };
     //category.Products.Add(new() { Name = "kalem 1", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
@@ -27,6 +28,7 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
     //category.Products.Add(new() { Name = "kalem 4", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
     //_context.Categories.Add(category);
     //_context.SaveChanges();
+
 
     Console.WriteLine("Done!");
 
