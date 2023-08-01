@@ -11,35 +11,21 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    // Full outer join için önce left
-    var left = await (from p in _context.Products
-                              join pf in _context.ProductFeature on p.Id equals pf.Id into pfList
-                              from pf in pfList.DefaultIfEmpty()select new
-                              {
-                                  Id = p.Id,
-                                  Name = p.Name,
-                                  Color = pf.Color,
-                                  Width = (int?)pf.Width,
-                              }).ToListAsync();
+    var id = 5;
+    decimal price = 100;
 
-    //  sonra right join yapabiliriz.
-    var right = await (from pf in _context.ProductFeature
-                                     join p in _context.Products on pf.Id equals p.Id into pList
-                                     from p in pList.DefaultIfEmpty()
-                                     select new
-                                     {
-                                         Id = p.Id,
-                                         Name = p.Name,
-                                         Color = pf.Color,
-                                         Width = (int?)pf.Width,
-                                     }).ToListAsync();
+    // raw sql
+    var products = await _context.Products.FromSqlRaw("SELECT * FROM Products").ToListAsync();
 
-    var FullOuterJoin = left.Union(right); // Union metodu sayesinde 2 listeyi birleştirebiliyoruz.
+    // parametre
+    var product = await _context.Products.FromSqlRaw("SELECT * FROM Products where id={0}",id).FirstAsync();
 
-    FullOuterJoin.ToList().ForEach(x=>
-    {
-        Console.WriteLine(x.Name);
-    });
+    // parametre
+    var product2 = await _context.Products.FromSqlRaw("SELECT * FROM Products where price>{0}",price).ToListAsync();
+
+
+    // başka yol ($) işareti koyduk sql sorgusunun başına bu sayede {} arasında değişkeni direkt belirtebiliyoruz.
+    var products3 = await _context.Products.FromSqlInterpolated($"SELECT * FROM Products where price>{price}").ToListAsync();
 
     Console.WriteLine("");
 
