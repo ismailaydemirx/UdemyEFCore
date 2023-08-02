@@ -8,33 +8,37 @@ using UdemyEFCore.CodeFirst.DAL;
 
 Initializer.Build();
 
-using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
+GetProducts(1, 6).ForEach(x =>
 {
+    Console.WriteLine($"{x.Id} {x.Name} {x.Price}");
+});
 
-    var products = _context.ProductFull.Where(x => x.Width > 100).ToList();
-    
-    Console.WriteLine("");
+static List<Product> GetProducts(int page, int pageSize)
+{
+    using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
+    {
+        // page =1 pageSize = 3 -- ilk 3 data => skip:0 take:3 ((page-1)*pageSize) => (1-1)*3 -> 0 tane atladım.
+        // page =2 pageSize = 3 -- ikinci 3 data => skip:3 take:3 ((page-1)*pageSize) => (2-1)*3 = 3 -> 3 tane atladım
+        // page =3 pageSize = 3 -- üçüncü 3 data => skip:6 take:3 ((page-1)*pageSize) => (3-1)*3 = 6 -> 6 tane atladım.
+        return _context.Products.Where(x => x.Price > 100).OrderByDescending(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-
-
-
-
-
-    //var category = new Category() { Name = "Kalemler" };
-    //category.Products.Add(new() { Name = "kalem 1", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "kalem 2", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "kalem 3", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "kalem 4", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //_context.Categories.Add(category);
-    //_context.SaveChanges();
-
-
-    Console.WriteLine("Done!");
+        
 
 
 
-    //_context.Products.Add(new() { Name = "Kalem1", Price=100,DiscountPrice=120, Barcode=123,Stock=1,Url="200"});
-    //_context.SaveChanges();
+        #region Data Insert
+        //var category = new Category() { Name = "Defterler" };
+        //category.Products.Add(new() { Name = "Defter 1", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
+        //category.Products.Add(new() { Name = "Defter 2", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
+        //category.Products.Add(new() { Name = "Defter 3", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
+        //category.Products.Add(new() { Name = "Defter 4", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
+        //_context.Categories.Add(category);
+        //_context.SaveChanges(); 
+        #endregion
 
+
+    }
 }
+
+
 
