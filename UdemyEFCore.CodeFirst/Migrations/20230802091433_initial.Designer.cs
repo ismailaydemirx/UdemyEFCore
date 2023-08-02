@@ -11,8 +11,8 @@ using UdemyEFCore.CodeFirst.DAL;
 namespace UdemyEFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230801122252_check")]
-    partial class check
+    [Migration("20230802091433_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,40 +41,6 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Models.ProductEssnetial", b =>
-                {
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToTable("ProductEssential");
-                });
-
-            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Models.ProductWithFeature", b =>
-                {
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.ToTable("ProductWithFeature");
-                });
-
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -93,6 +59,11 @@ namespace UdemyEFCore.CodeFirst.Migrations
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -106,6 +77,8 @@ namespace UdemyEFCore.CodeFirst.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("Name");
 
                     b.ToTable("Products");
@@ -114,10 +87,7 @@ namespace UdemyEFCore.CodeFirst.Migrations
             modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -132,6 +102,39 @@ namespace UdemyEFCore.CodeFirst.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductFeature");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
+                {
+                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.ProductFeature", b =>
+                {
+                    b.HasOne("UdemyEFCore.CodeFirst.DAL.Product", "Product")
+                        .WithOne("ProductFeature")
+                        .HasForeignKey("UdemyEFCore.CodeFirst.DAL.ProductFeature", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("UdemyEFCore.CodeFirst.DAL.Product", b =>
+                {
+                    b.Navigation("ProductFeature")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

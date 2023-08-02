@@ -16,10 +16,6 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
 
-        //public DbSet<Person> People { get; set; }
-        //public DbSet<Teacher> Teachers { get; set; }
-        //public DbSet<Students> Students { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
@@ -28,7 +24,8 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-
+            modelBuilder.Entity<Product>().Property(x=>x.IsDeleted).HasDefaultValue(false);
+            modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
             base.OnModelCreating(modelBuilder);
         }
     }
