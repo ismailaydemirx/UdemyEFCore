@@ -15,6 +15,7 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
+        public DbSet<ProductFull> ProductFull { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +25,8 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
+            // Bir best practice olarak stored procedure'leri her zaman HasNoKey olarak belirtmem gerekiyor.
+            modelBuilder.Entity<ProductFull>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
         }

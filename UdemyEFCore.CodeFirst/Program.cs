@@ -12,8 +12,9 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    var products = await _context.Products.FromSqlRaw("exec sp_get_products").ToListAsync();
+    var productFull = await _context.ProductFull.FromSqlRaw("exec sp_get_product_full").ToListAsync();
 
+    var product2 = productFull.Where(x => x.Price > 100).ToList();
     
     Console.WriteLine("");
 
