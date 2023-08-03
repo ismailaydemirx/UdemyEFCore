@@ -9,11 +9,12 @@ using UdemyEFCore.CodeFirst.DAL;
 Initializer.Build();
 
 
-using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
+using (var _context = new AppDbContext()) // Normalde AppDbContext içerisini boş bırakıyorduk ancak biz bir Barcode constructor'ı oluşturduk ve buna değer gönderebiliyoruz.
 {
 
-    var products = _context.Products.IgnoreQueryFilters().ToList();
+    var products = _context.Products.ToList();
 
+    
     Console.WriteLine("");
 
 

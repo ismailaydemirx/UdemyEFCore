@@ -12,6 +12,17 @@ namespace UdemyEFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
 
+        private readonly int Barcode;
+
+        public AppDbContext(int barcode)
+        {
+            Barcode = barcode;
+        }
+        public AppDbContext()
+        {
+
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
@@ -24,8 +35,19 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            modelBuilder.Entity<Product>().Property(x=>x.IsDeleted).HasDefaultValue(false);
-            modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Product>().Property(x => x.IsDeleted).HasDefaultValue(false);
+
+            // burası her bir DbContext'den nesne aldığımızda çalışıyor. Query'de yazdığımız kodlar her türlü çalışıyor.
+            if (Barcode != default(int))
+            {
+                modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted && x.Barcode == Barcode);
+            }
+            else
+            {
+                modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            }
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
