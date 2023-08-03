@@ -11,8 +11,12 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    var productWithFeatures = _context.Products.TagWith(@"1. Satır
-2. Satır").Include(x=>x.ProductFeature).Where(x=>x.Price>100).ToList();
+
+    var product = _context.Products.First(x=>x.Id==2);
+    product.Name = "Defter 22";
+    _context.Update(product); // AppDbContext.cs dosyası içinde NoTracking'i global olarak tanımladık o yüzden üst kısımda product.Name'e değer verirken 'Update' fonksiyonunu çağırmalıyız ki veriyi güncelleyebilsin.
+    _context.SaveChanges();
+
     
     Console.WriteLine("");
 
