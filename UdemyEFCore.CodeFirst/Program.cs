@@ -11,21 +11,20 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
+    int categoryId = 1;
+    decimal price = 120;
+    var productFullParameters = await _context.ProductFull.FromSqlInterpolated($"exec sp_get_product_full_parameters {categoryId}, {price}").ToListAsync();
 
-    var productFull = await _context.ProductFull.FromSqlRaw("exec sp_get_product_full").ToListAsync();
-
-    var product2 = productFull.Where(x => x.Price > 100).ToList();
-    
     Console.WriteLine("");
 
 
 
     #region Data Insert
-    //var category = new Category() { Name = "Defterler" };
-    //category.Products.Add(new() { Name = "Defter 1", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "Defter 2", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "Defter 3", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
-    //category.Products.Add(new() { Name = "Defter 4", Price = 100, Stock = 200, Barcode = 123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 100 } });
+    //var category = new Category() { Name = "Kitaplar" };
+    //category.Products.Add(new() { Name = "Kitap 1", Price = 150, Stock = 200, Barcode = 12123, ProductFeature = new ProductFeature() { Color = "Red", Height = 200, Width = 200 } });
+    //category.Products.Add(new() { Name = "Kitap 2", Price = 300, Stock = 200, Barcode = 1256, ProductFeature = new ProductFeature() { Color = "Blue", Height = 260, Width = 100 } });
+    //category.Products.Add(new() { Name = "Kitap 3", Price = 2300, Stock = 200, Barcode = 12, ProductFeature = new ProductFeature() { Color = "Brown", Height = 170, Width = 130 } });
+    //category.Products.Add(new() { Name = "Kitap 4", Price = 1100, Stock = 200, Barcode = 1223, ProductFeature = new ProductFeature() { Color = "Black", Height = 252, Width = 120 } });
     //_context.Categories.Add(category);
     //_context.SaveChanges();
     #endregion
