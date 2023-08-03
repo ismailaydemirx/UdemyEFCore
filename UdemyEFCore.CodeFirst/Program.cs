@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using System.Linq;
@@ -11,9 +12,32 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    int categoryId = 1;
-    decimal price = 120;
-    var productFullParameters = await _context.ProductFull.FromSqlInterpolated($"exec sp_get_product_full_parameters {categoryId}, {price}").ToListAsync();
+
+
+    var product = new Product()
+    {
+        Name = "defter 6",
+        Price = 129,
+        DiscountPrice = 12,
+        Stock = 500,
+        Barcode = 94,
+        CategoryId = 1,
+
+    };
+    var newProductIdPrameter = new SqlParameter("@newId", System.Data.SqlDbType.Int);
+    newProductIdPrameter.Direction = System.Data.ParameterDirection.Output;
+
+
+
+    _context.Database.ExecuteSqlInterpolated($"exec sp_insert_product {product.Name},{product.Price},{product.DiscountPrice},{product.Stock},{product.Barcode},{product.CategoryId}, {newProductIdPrameter} out");
+
+
+
+    var newProductId = newProductIdPrameter.Value;
+
+    var result = _context.Database.ExecuteSqlInterpolated($"exec sp_insert_product2 {product.Name},{product.Price},{product.DiscountPrice},{product.Stock},{product.Barcode},{product.CategoryId}");
+
+
 
     Console.WriteLine("");
 
