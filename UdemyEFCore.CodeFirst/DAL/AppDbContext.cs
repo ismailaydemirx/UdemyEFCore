@@ -25,8 +25,8 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-            // Bir best practice olarak stored procedure'leri her zaman HasNoKey olarak belirtmem gerekiyor.
-            modelBuilder.Entity<ProductFull>().HasNoKey();
+
+            modelBuilder.Entity<ProductFull>().ToFunction("fc_product_full"); // program.cs den çağırdığımızda burası otomatik olarak bizim fonksiyonumuzu çalıştıracak.
 
             base.OnModelCreating(modelBuilder);
         }

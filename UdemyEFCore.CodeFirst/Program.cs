@@ -13,30 +13,8 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-
-    var product = new Product()
-    {
-        Name = "defter 6",
-        Price = 129,
-        DiscountPrice = 12,
-        Stock = 500,
-        Barcode = 94,
-        CategoryId = 1,
-
-    };
-    var newProductIdPrameter = new SqlParameter("@newId", System.Data.SqlDbType.Int);
-    newProductIdPrameter.Direction = System.Data.ParameterDirection.Output;
-
-
-
-    _context.Database.ExecuteSqlInterpolated($"exec sp_insert_product {product.Name},{product.Price},{product.DiscountPrice},{product.Stock},{product.Barcode},{product.CategoryId}, {newProductIdPrameter} out");
-
-
-
-    var newProductId = newProductIdPrameter.Value;
-
-    var result = _context.Database.ExecuteSqlInterpolated($"exec sp_insert_product2 {product.Name},{product.Price},{product.DiscountPrice},{product.Stock},{product.Barcode},{product.CategoryId}");
-
+    var products = await _context.ProductFull.ToListAsync(); // bu kodu çağırdığımız andan itibaren appdbcontex de bulunan fonksiyonumuz otomatik olarak çağrılıyor.
+    
 
 
     Console.WriteLine("");
