@@ -21,6 +21,10 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
         ProductCount = _context.GetProductCount(x.Id),
     }).Where(x=>x.ProductCount>2).ToListAsync();
 
+
+    int categoryId = 1;
+    var productCount = _context.ProductCount.FromSqlInterpolated($"SELECT dbo.fc_get_product_count({categoryId}) as Count").First().Count;
+
     Console.WriteLine("");
 
 

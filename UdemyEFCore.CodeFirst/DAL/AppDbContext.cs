@@ -15,6 +15,7 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
+        public DbSet<ProductCount> ProductCount { get; set; }
 
 
         public IQueryable<ProductWithFeature> GetProductWithFeatures(int categoryId) => FromExpression(() => GetProductWithFeatures(categoryId));
@@ -37,6 +38,9 @@ namespace UdemyEFCore.CodeFirst.DAL
 
 
             modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductCount), new[] { typeof(int) })!).HasName("fc_get_product_count");
+
+            modelBuilder.Entity<ProductCount>().HasNoKey(); // entity değil model tanımladığımız için HasNoKey belirttik.
+
             base.OnModelCreating(modelBuilder);
         }
     }
