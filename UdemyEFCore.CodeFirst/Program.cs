@@ -12,10 +12,7 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-
-    int categoryId = 3;
-    var products = await _context.ProductWithFeature.FromSqlInterpolated($"select * from fc_product_full_with_parameters({categoryId})").ToListAsync();
-
+    var product = await _context.GetProductWithFeatures(3).Where(x=>x.Width>100).ToListAsync();
 
     Console.WriteLine("");
 
