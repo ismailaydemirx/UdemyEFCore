@@ -13,8 +13,8 @@ Initializer.Build();
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
 
-    var products = await _context.ProductFull.ToListAsync(); // bu kodu çağırdığımız andan itibaren appdbcontex de bulunan fonksiyonumuz otomatik olarak çağrılıyor.
-    
+    int categoryId = 3;
+    var products = await _context.ProductWithFeature.FromSqlInterpolated($"select * from fc_product_full_with_parameters({categoryId})").ToListAsync();
 
 
     Console.WriteLine("");

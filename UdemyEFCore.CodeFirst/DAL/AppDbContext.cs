@@ -15,7 +15,7 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
-        public DbSet<ProductFull> ProductFull { get; set; }
+        public DbSet<ProductWithFeature> ProductWithFeature { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,8 +25,7 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-
-            modelBuilder.Entity<ProductFull>().ToFunction("fc_product_full"); // program.cs den çağırdığımızda burası otomatik olarak bizim fonksiyonumuzu çalıştıracak.
+            
 
             base.OnModelCreating(modelBuilder);
         }
