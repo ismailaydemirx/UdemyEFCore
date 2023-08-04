@@ -19,6 +19,11 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         public IQueryable<ProductWithFeature> GetProductWithFeatures(int categoryId) => FromExpression(() => GetProductWithFeatures(categoryId));
 
+        public int GetProductCount(int categoryId)
+        {
+            throw new NotSupportedException("This method is called by EF Core");
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
@@ -29,6 +34,9 @@ namespace UdemyEFCore.CodeFirst.DAL
         {
 
             modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductWithFeatures), new[] { typeof(int) })!).HasName("fc_product_full_with_parameters");
+
+
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductCount), new[] { typeof(int) })!).HasName("fc_get_product_count");
             base.OnModelCreating(modelBuilder);
         }
     }

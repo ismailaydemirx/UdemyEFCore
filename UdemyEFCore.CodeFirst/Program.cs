@@ -14,6 +14,13 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
 {
     var product = await _context.GetProductWithFeatures(3).Where(x=>x.Width>100).ToListAsync();
 
+    
+    var categories = await _context.Categories.Select(x=> new
+    {
+        CategoryName = x.Name,
+        ProductCount = _context.GetProductCount(x.Id),
+    }).Where(x=>x.ProductCount>2).ToListAsync();
+
     Console.WriteLine("");
 
 
