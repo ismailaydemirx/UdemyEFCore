@@ -12,10 +12,10 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    // Porjections | Anonymous Types - 1
-    // İsimsiz bir tipe yansıtmak için kullanacağımız ilk method Select methodu.
+    // Porjections | Anonymous Types - 2
+    // Eğer ki Select ifadesini kullanıyorsak, Include'ları kullanmamıza gerek yok ancak kullandığımız nesnelerin birbirlerine navigation property'leri olmak zorunda.
 
-    var products = await _context.Products.Include(x => x.Category).Include(x => x.ProductFeature).Select(x => new
+    var products = await _context.Products.Select(x => new
     {
         CategoryName = x.Category.Name,
         ProductName = x.Name,
@@ -23,14 +23,16 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
         Width = (int?)x.ProductFeature.Width,
     }).Where(x => x.Width > 10 && x.ProductName.StartsWith("k")).ToListAsync();
 
-    // Burada ThenInclude dediğimizde x nesnesi ondan önceki include ettiğimiz nesneyi temsil ediyor yani burada ThenInclude içerisinde bulunan 'x' Product nesnesini temsil ediyor.
-    var categories = _context.Categories.Include(x => x.Products).ThenInclude(x => x.ProductFeature).Select(x => new
+    // Bu sorguda Include ifadesi kullanmadık, çünkü kullandığımız nesnelerin zaten birbirlerine navigation property'leri var ve gerekli bilgileri Select ifadesi ile alabiliyoruz.
+    var categories = _context.Categories.Select(x => new
     {
         CategoryName = x.Name,
         Products = String.Join(",", x.Products.Select(z => z.Name)),
-        TotalPrice = x.Products.Sum(x => x.Price)
+        TotalPrice = x.Products.Sum(x => x.Price),
+        TotalWidth = (int?)x.Products.Select(x => x.ProductFeature.Width).Sum()
 
     }).Where(y => y.TotalPrice > 100).OrderByDescending(x => x.TotalPrice).ToList();
+
 
 
     Console.WriteLine("");
