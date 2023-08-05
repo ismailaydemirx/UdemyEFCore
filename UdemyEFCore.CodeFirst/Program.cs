@@ -23,6 +23,15 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
         Width = (int?)x.ProductFeature.Width,
     }).Where(x => x.Width > 10 && x.ProductName.StartsWith("k")).ToListAsync();
 
+    // Burada ThenInclude dediğimizde x nesnesi ondan önceki include ettiğimiz nesneyi temsil ediyor yani burada ThenInclude içerisinde bulunan 'x' Product nesnesini temsil ediyor.
+    var categories = _context.Categories.Include(x => x.Products).ThenInclude(x => x.ProductFeature).Select(x => new
+    {
+        CategoryName = x.Name,
+        Products = String.Join(",", x.Products.Select(z => z.Name)),
+        TotalPrice = x.Products.Sum(x => x.Price)
+
+    }).Where(y => y.TotalPrice > 100).OrderByDescending(x => x.TotalPrice).ToList();
+
 
     Console.WriteLine("");
 
