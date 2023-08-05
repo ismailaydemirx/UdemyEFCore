@@ -12,18 +12,17 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    var product = await _context.GetProductWithFeatures(3).Where(x=>x.Width>100).ToListAsync();
+    // Porjections | Anonymous Types - 1
+    // İsimsiz bir tipe yansıtmak için kullanacağımız ilk method Select methodu.
 
-    
-    var categories = await _context.Categories.Select(x=> new
+    var products = await _context.Products.Include(x => x.Category).Include(x => x.ProductFeature).Select(x => new
     {
-        CategoryName = x.Name,
-        ProductCount = _context.GetProductCount(x.Id),
-    }).Where(x=>x.ProductCount>2).ToListAsync();
+        CategoryName = x.Category.Name,
+        ProductName = x.Name,
+        ProductPrice = x.Price,
+        Width = (int?)x.ProductFeature.Width,
+    }).Where(x => x.Width > 10 && x.ProductName.StartsWith("k")).ToListAsync();
 
-
-    int categoryId = 1;
-    var productCount = _context.ProductCount.FromSqlInterpolated($"SELECT dbo.fc_get_product_count({categoryId}) as Count").First().Count;
 
     Console.WriteLine("");
 

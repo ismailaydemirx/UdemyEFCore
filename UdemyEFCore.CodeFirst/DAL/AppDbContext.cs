@@ -15,15 +15,9 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductFeature> ProductFeature { get; set; }
-        public DbSet<ProductCount> ProductCount { get; set; }
+   
 
 
-        public IQueryable<ProductWithFeature> GetProductWithFeatures(int categoryId) => FromExpression(() => GetProductWithFeatures(categoryId));
-
-        public int GetProductCount(int categoryId)
-        {
-            throw new NotSupportedException("This method is called by EF Core");
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,13 +27,6 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // Fluent API yöntemi ile configuration yapıyoruz.
         {
-
-            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductWithFeatures), new[] { typeof(int) })!).HasName("fc_product_full_with_parameters");
-
-
-            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductCount), new[] { typeof(int) })!).HasName("fc_get_product_count");
-
-            modelBuilder.Entity<ProductCount>().HasNoKey(); // entity değil model tanımladığımız için HasNoKey belirttik.
 
             base.OnModelCreating(modelBuilder);
         }
