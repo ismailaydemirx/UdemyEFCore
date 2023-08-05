@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using UdemyEFCore.CodeFirst;
 using UdemyEFCore.CodeFirst.DAL;
+using UdemyEFCore.CodeFirst.DTOs;
 
 Initializer.Build();
 
@@ -15,19 +16,20 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
     // Porjections | Anonymous Types - 2
     // Eğer ki Select ifadesini kullanıyorsak, Include'ları kullanmamıza gerek yok ancak kullandığımız nesnelerin birbirlerine navigation property'leri olmak zorunda.
 
-    var products = await _context.Products.Select(x => new
+    var products = await _context.Products.Select(x => new ProductDto
     {
         CategoryName = x.Category.Name,
         ProductName = x.Name,
         ProductPrice = x.Price,
-        Width = (int?)x.ProductFeature.Width,
+        Width = (int?)x.ProductFeature.Width
+
     }).Where(x => x.Width > 10 && x.ProductName.StartsWith("k")).ToListAsync();
 
     // Bu sorguda Include ifadesi kullanmadık, çünkü kullandığımız nesnelerin zaten birbirlerine navigation property'leri var ve gerekli bilgileri Select ifadesi ile alabiliyoruz.
-    var categories = _context.Categories.Select(x => new
+    var categories = _context.Categories.Select(x => new ProductDto2
     {
         CategoryName = x.Name,
-        Products = String.Join(",", x.Products.Select(z => z.Name)),
+        ProductsName = String.Join(",", x.Products.Select(z => z.Name)),
         TotalPrice = x.Products.Sum(x => x.Price),
         TotalWidth = (int?)x.Products.Select(x => x.ProductFeature.Width).Sum()
 
