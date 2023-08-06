@@ -17,8 +17,6 @@ namespace UdemyEFCore.CodeFirst.DAL
         public DbSet<ProductFeature> ProductFeature { get; set; }
    
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build(); // alt kısımdaki connection string'i okuyabilmesi için Build metodumuzu burada çağırıyoruz. (initialize ediyoruz yani nesne örneğini oluşturuyoruz.)
