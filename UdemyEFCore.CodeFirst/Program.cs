@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using AutoMapper.QueryableExtensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
@@ -14,7 +15,7 @@ Initializer.Build();
 
 using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlemimiz bittiği zaman bu new'leme yaptığımız işlem memory'den dispose olsun yani silinsi ki boş yer kaplamasın.
 {
-    // Porjections | DTO/View Module / AutoMapper-1
+    // Porjections | DTO/View Module / AutoMapper-2
 
 
     //var productsDto = _context.Products.Select(x => new ProductDto
@@ -27,10 +28,13 @@ using (var _context = new AppDbContext()) // using kullanmamızın sebebi işlem
     //}).ToList();
 
 
-    var product = _context.Products.ToList();
+    //var product = _context.Products.ToList();
     // ObjectMapper sınıfına git, Mapper üzerinden Map'le ProductDto'yu Product'a maple. Liste geleceği için liste olduğunu da belirttik.
-    var productDto = ObjectMapper.Mapper.Map<List<ProductDto>>(product);
+    //var productDto = ObjectMapper.Mapper.Map<List<ProductDto>>(product);
 
+
+
+    var productDto = _context.Products.ProjectTo<ProductDto>(ObjectMapper.Mapper.ConfigurationProvider).Where(x=>x.Price>100).ToList();
 
 
 

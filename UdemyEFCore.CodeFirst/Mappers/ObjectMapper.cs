@@ -26,10 +26,6 @@ namespace UdemyEFCore.CodeFirst.Mappers
         public static IMapper Mapper => layz.Value;
     }
 
-    
-
-
-
     internal class CustomMapping:Profile
     {
         public CustomMapping()
