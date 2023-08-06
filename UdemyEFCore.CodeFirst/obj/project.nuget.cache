@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "nZI6IKgqenCMRzNpnZwZTtEs5MYCuZDCbVuUB5qMuCdgjCbq7T0qQDdgZuTRRXePLB7kicz9ctkpSPYFyomJug==",
+  "dgSpecHash": "Yboh2ooJCymDDort2oXkfnbrARJBws68UkLsuspRDvYIKAOKH55qwyjNNoaG2rgh1STyvukgzUZIua66PMUs/g==",
   "success": true,
   "projectFilePath": "C:\\Users\\BAYDEMIR\\source\\UdemyEfCore\\UdemyEFCore\\UdemyEFCore.CodeFirst\\UdemyEFCore.CodeFirst.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\BAYDEMIR\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
-    "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.2\\microsoft.data.sqlclient.5.0.2.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.0.1\\microsoft.data.sqlclient.sni.runtime.5.0.1.nupkg.sha512",
     "C:\\Users\\BAYDEMIR\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.9\\microsoft.entityframeworkcore.7.0.9.nupkg.sha512",

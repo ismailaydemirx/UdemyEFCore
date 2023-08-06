@@ -1,16 +1,19 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UdemyEFCore.CodeFirst.DAL;
 
 namespace UdemyEFCore.CodeFirst.DTOs
 {
-    public class ProductDto
+    internal class ProductDto
     {
-        public string CategoryName { get; set; }
-        public string ProductName { get; set; }
-        public decimal ProductPrice { get; set; }
-        public int? Width { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public decimal DiscountPrice { get; set; }
+        public int Stock { get; set; }
     }
 }
