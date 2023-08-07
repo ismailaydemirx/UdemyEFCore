@@ -14,16 +14,17 @@ using UdemyEFCore.CodeFirst.Mappers;
 
 using (var context = new AppDbContext())
 {
-    using (var transaction = context.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+    using (var transaction = context.Database.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
     {
-        // ReadUncommitted kullanırken başka bir transaction arada, Update,Delete vs gibi işlemleri gerçekleştirebiliyoruz.
-        var products = context.Products.ToList();
+        // Isolation Levels | Read Committed
+
+        //var products = context.Products.ToList();
 
 
         var product = context.Products.First();
         product.Price = 3000;
 
-        //context.Products.Add(new Product() { Name = "a", Price = 1, Barcode = 2, CategoryId = 1, DiscountPrice = 1 });
+        context.Products.Add(new Product() { Name = "a", Price = 1, Barcode = 2, CategoryId = 1, DiscountPrice = 1 });
         context.SaveChanges();
 
         transaction.Commit();
