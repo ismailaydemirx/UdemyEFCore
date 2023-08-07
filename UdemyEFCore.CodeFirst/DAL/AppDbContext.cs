@@ -12,17 +12,10 @@ namespace UdemyEFCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
-        private DbConnection _connection;
 
         public AppDbContext()
         {
         }
-
-        public AppDbContext(DbConnection connection)
-        {
-            _connection = connection;
-        }
-
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -31,16 +24,10 @@ namespace UdemyEFCore.CodeFirst.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_connection == default(DbConnection))
-            {
-                Initializer.Build();
-                optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information).UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
-            }
-            else
-            {
-                optionsBuilder.LogTo(Console.WriteLine,
-                    Microsoft.Extensions.Logging.LogLevel.Information).UseSqlServer(_connection);
-            }
+
+            Initializer.Build();
+            optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information).UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+
 
         }
 
